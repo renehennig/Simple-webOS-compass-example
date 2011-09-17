@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+    <head>
+        <title>oneRock - Compass</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/compass.css">
+    </head>
+    <body>
+    	<h1>A little framework-less webOS compass example</h1>
+        
+        <label for="trueHeading">TrueHeading</label>
+        <div id="trueHeading"></div>
+        
+        <label for="magHeading">MagHeading</label>
+        <div id="magHeading"></div>
+        
+        <div id="heading" class="heading">216°</div>
+        <img id="compass" alt="compass" height="400px" width="400px" src="img/compass_400x400.png" />
+    	
+        <script type="text/javascript">
+            if (window.PalmSystem) PalmSystem.stageReady();
+            document.addEventListener("compass", function (a) {
+            	document.getElementById("trueHeading").innerHTML = a.trueHeading;
+            	document.getElementById("magHeading").innerHTML = a.magHeading;
+            	document.getElementById("heading").innerHTML = parseInt(a.magHeading) + "&deg;";
+            	
+            	var heading = parseFloat(a.magHeading);
+            	document.getElementById("compass").style['-webkit-transform'] = "rotate3d(0,0,1,-" + heading + "deg)";
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,10 @@
+{
+	"id": "com.onerock.compass",
+	"version": "0.0.1",
+	"vendor": "oneRock",
+	"type": "web",
+	"main": "index.html",
+	"title": "oneRock Compass",
+	"icon": "images/icon.png",
+	"uiRevision": 2
+}
