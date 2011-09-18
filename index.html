@@ -1,34 +1,59 @@
 <!doctype html>
 <html>
-    <head>
-        <title>oneRock - Compass</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="viewport" content="width=device-width height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="stylesheet" type="text/css" media="screen" href="css/compass.css">
-    </head>
-    <body>
-    	<h1>A little framework-less webOS compass example</h1>
-        
-        <label for="trueHeading">TrueHeading</label>
-        <div id="trueHeading"></div>
-        
-        <label for="magHeading">MagHeading</label>
-        <div id="magHeading"></div>
-        
-        <div id="heading" class="heading">216°</div>
-        <img id="compass" alt="compass" height="400px" width="400px" src="img/compass_400x400.png" />
-    	
-        <script type="text/javascript">
-            if (window.PalmSystem) PalmSystem.stageReady();
-            document.addEventListener("compass", function (a) {
-            	document.getElementById("trueHeading").innerHTML = a.trueHeading;
-            	document.getElementById("magHeading").innerHTML = a.magHeading;
-            	document.getElementById("heading").innerHTML = parseInt(a.magHeading) + "&deg;";
-            	
-            	var heading = parseFloat(a.magHeading);
-            	document.getElementById("compass").style['-webkit-transform'] = "rotate3d(0,0,1,-" + heading + "deg)";
-            });
-        </script>
-    </body>
+	<head>
+		<title>oneRock - Compass</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/compass.css">
+	</head>
+	<body>
+		<h1>A little framework-less webOS compass example</h1>
+		
+		<label for="trueHeading">TrueHeading</label>
+		<div id="trueHeading"></div>
+		
+		<label for="magHeading">MagHeading</label>
+		<div id="magHeading"></div>
+		
+		<div id="heading" class="heading"></div>
+		<img id="compass" alt="compass" height="400px" width="400px" src="img/compass_400x400.png" />
+		
+		<script type="text/javascript">
+			if (window.PalmSystem) {
+				// We're ready
+				PalmSystem.stageReady();
+				
+				// To suppress a error message
+				var Mojo;
+
+				// The compass needs a fixed orientation
+				PalmSystem.setWindowOrientation("up");
+				
+				// Set to full screen - Because we can!
+				PalmSystem.enableFullScreenMode(true);
+				
+				// Set the "compass" listener
+				document.addEventListener("compass", function (value) {
+					// Write the trueheading output in div id="trueHeading"
+					document.getElementById("trueHeading").innerHTML = value.trueHeading;
+					
+					// Write the magheading output in div id="magHeading"
+					document.getElementById("magHeading").innerHTML = value.magHeading;
+					
+					// Write the magheading output with ° in our compass, div id="heading"
+					// parseInt = https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt
+					document.getElementById("heading").innerHTML = parseInt(value.magHeading) + "&deg;";
+					
+					// Change the css3 div style and rotate the image.
+					// parseFloat = https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parsefloat
+					// rotate3d = http://www.html5rocks.com/en/tutorials/3d/css/
+					document.getElementById("compass").style['-webkit-transform'] = "rotate3d(0,0,1,-" + parseFloat(value.magHeading) + "deg)";
+				});
+			} else {
+				document.getElementById("compass").style.display = "none";
+				document.getElementById("heading").innerHTML = "There's no PalmSystem ... ";
+			}
+		</script>
+	</body>
 </html>
