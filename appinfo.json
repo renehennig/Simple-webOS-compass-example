@@ -1,6 +1,6 @@
 {
 	"id": "com.onerock.compass",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"vendor": "oneRock",
 	"type": "web",
 	"main": "index.html",
